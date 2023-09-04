@@ -20,7 +20,7 @@ function LoginPage() {
       headers: {
         "Content-Type": "application/json",
       },
-      referrerPolicy: "unsafe_url",
+
       body: JSON.stringify({
         username,
         password,
