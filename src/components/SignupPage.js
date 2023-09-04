@@ -1,32 +1,31 @@
-import React, { useState } from 'react';
-import {useNavigate, Link } from 'react-router-dom';
-import '../styles/SignupPage.css';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/SignupPage.css";
 
 function SignupPage() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({}); // State to track form field errors
   const navigate = useNavigate();
-
 
   const validateForm = () => {
     const errors = {};
 
     if (!username) {
-      errors.username = 'Username is required';
+      errors.username = "Username is required";
     }
 
     if (!email) {
-      errors.email = 'Email is required';
+      errors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = 'Invalid email format';
+      errors.email = "Invalid email format";
     }
 
     if (!password) {
-      errors.password = 'Password is required';
+      errors.password = "Password is required";
     } else if (password.length < 8) {
-      errors.password = 'Password must be at least 8 characters';
+      errors.password = "Password must be at least 8 characters";
     }
 
     setErrors(errors);
@@ -39,27 +38,29 @@ function SignupPage() {
       return;
     }
 
-    const response = await fetch('http://127.0.0.1:8000/api/users/register/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_API}/api/users/register/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      }
+    );
 
-    
     if (response.ok) {
       // Set the newUser flag to true
-      localStorage.setItem('newUser', 'true');
-      console.log('login page haha');
-      navigate('/');
+      localStorage.setItem("newUser", "true");
+      console.log("login page haha");
+      navigate("/");
     } else {
-      console.log('is fucked');
-      alert(response.errors)
+      console.log("is fucked");
+      alert(response.errors);
     }
   };
 
@@ -79,12 +80,19 @@ function SignupPage() {
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input type="password" onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           {errors.password && <span className="error">{errors.password}</span>}
         </div>
-        <button className="signup-button" type="button" onClick={handleSignup}>Sign Up</button>
+        <button className="signup-button" type="button" onClick={handleSignup}>
+          Sign Up
+        </button>
       </form>
-      <p>Already have an account? <Link to="/">Login</Link></p>
+      <p>
+        Already have an account? <Link to="/">Login</Link>
+      </p>
     </div>
   );
 }
