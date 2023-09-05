@@ -15,17 +15,20 @@ function LoginPage() {
       return;
     }
 
-    const response = await fetch(`${process.env.REACT_APP_API}/token/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await fetch(
+      "http://socialnetwork-lb-1375855415.us-east-1.elb.amazonaws.com:8000/token/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
