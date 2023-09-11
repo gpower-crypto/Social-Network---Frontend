@@ -12,7 +12,7 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:8000/api/chat-messages/user_chat/?friend_id=${friendId}`,
+        `http://127.0.0.1:8000/api/chat-messages/user_chat/?friend_id=${friendId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ function Chat() {
 
       // Create a new chat message in the database
       const response = await fetch(
-        `${process.env.REACT_APP_API}/api/chat-messages/create_message/`,
+        "http://127.0.0.1:8000/api/chat-messages/create_message/",
         {
           method: "POST",
           headers: {

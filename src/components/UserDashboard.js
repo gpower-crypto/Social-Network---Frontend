@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/UserDashboard.css";
 import Comments from "./Comments";
+import * as Sentry from "@sentry/react";
 
 function UserDashboard() {
   const [posts, setPosts] = useState([]);
@@ -14,6 +15,24 @@ function UserDashboard() {
   const decodedPayload = atob(payload);
   const user = JSON.parse(decodedPayload);
   const userId = user.user_id;
+
+  const sendDataToSentry = ({ name, message, extra, tags }) => {
+    const error = new Error();
+
+    error.message = message;
+
+    error.name = name;
+
+    // Added login source as a common extra param for onboarding errors
+
+    // Sentry called
+
+    Sentry.captureException(error, {
+      tags,
+
+      extra,
+    });
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -57,6 +76,11 @@ function UserDashboard() {
           console.error("Error fetching user status");
         }
       } catch (error) {
+        console.log("here error");
+        sendDataToSentry({
+          name: `errDashboard: ${userId}`,
+          message: "error fetching status",
+        });
         console.error("Error fetching user status", error);
       }
     };
