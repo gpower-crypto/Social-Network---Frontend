@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import "../styles/FriendRequests.css";
+import NavigationBar from "./NavigationBar";
 
 const FriendRequests = () => {
   const [friendRequests, setFriendRequests] = useState([]);
@@ -98,41 +100,56 @@ const FriendRequests = () => {
   };
 
   return (
-    <div className="friend-requests">
-      <h2>Friend Requests</h2>
-      <ul>
-        {friendRequests.map((request) => (
-          <li key={request.id}>
-            {request.from_user === userId ? (
-              <>
-                To: {usernames[request.to_user]}, Status: {request.status}
-              </>
-            ) : (
-              <>
-                From: {usernames[request.from_user]}, Status: {request.status}
-                {request.status === "pending" && (
-                  <>
-                    <button
-                      onClick={() =>
-                        handleAcceptRequest(request.id, request.from_user)
-                      }
-                    >
-                      Accept
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleRejectRequest(request.id, request.from_user)
-                      }
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className="friend-requests-page">
+      <NavigationBar activePage="friend-requests" />
+      <div className="friend-requests">
+        <h2>Friend Requests</h2>
+        <ul>
+          {friendRequests.map((request) => (
+            <li key={request.id} className="friend-request-item">
+              {request.from_user === userId ? (
+                <>
+                  <span className="request-info">
+                    To: {usernames[request.to_user]}
+                  </span>
+                  <span className="request-status">
+                    Status: {request.status}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="request-info">
+                    From: {usernames[request.from_user]}
+                  </span>
+                  <span className="request-status">
+                    Status: {request.status}
+                  </span>
+                  {request.status === "pending" && (
+                    <div className="action-buttons">
+                      <button
+                        className="accept-button"
+                        onClick={() =>
+                          handleAcceptRequest(request.id, request.from_user)
+                        }
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="reject-button"
+                        onClick={() =>
+                          handleRejectRequest(request.id, request.from_user)
+                        }
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

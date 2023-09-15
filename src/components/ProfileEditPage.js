@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/ProfileEditPage.css";
 
 function ProfileEditPage() {
   const [name, setName] = useState("");
@@ -61,7 +62,7 @@ function ProfileEditPage() {
 
       if (response.ok) {
         console.log("Profile updated successfully");
-        navigate(`/profile/${userId}`);
+        navigate("/home");
       } else {
         // Handle error
       }

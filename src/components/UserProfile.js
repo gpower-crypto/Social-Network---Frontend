@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "../styles/UserProfile.css"; // Import your UserProfile CSS file
 
-function UserProfile() {
-  const { userId } = useParams();
+function UserProfile({ userId, showEditButton }) {
   const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
@@ -38,6 +38,14 @@ function UserProfile() {
       <h1>Profile</h1>
       {profileData ? (
         <>
+          {/* Display profile picture */}
+          {profileData.profile_picture && (
+            <img
+              src={`http://127.0.0.1:8000${profileData.profile_picture}`}
+              alt="Profile"
+              className="profile-picture" // Apply a CSS class for styling
+            />
+          )}
           <p>
             <strong>Username:</strong> {profileData.username}
           </p>
@@ -51,19 +59,15 @@ function UserProfile() {
           <p>
             <strong>Location:</strong> {profileData.location}
           </p>
-          {/* Display profile picture */}
-          {profileData.profile_picture && (
-            <img
-              src={`http://127.0.0.1:8000${profileData.profile_picture}`}
-              alt="Profile"
-              style={{ maxWidth: "200px" }}
-            />
-          )}
         </>
       ) : (
-        <p>Please set up your profile.</p>
+        <p>No profile setup.</p>
       )}
-      <Link to={`/profile/${userId}/edit`}>Edit Profile</Link>
+      {showEditButton && (
+        <Link to={`/profile/${userId}/edit`} className="edit-link">
+          Edit Profile
+        </Link>
+      )}
     </div>
   );
 }

@@ -1,12 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import "../styles/Chat.css";
+import NavigationBar from "./NavigationBar";
 
 function Chat() {
   const { friendId } = useParams();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [chatSocket, setChatSocket] = useState(null);
-  const { userId } = useParams();
+  const [userUsername, setUserUsername] = useState("");
+  const [friendUsername, setFriendUsername] = useState("");
+  const chatContainerRef = useRef(null);
+
+  const token = localStorage.getItem("token");
+  const [header, payload, signature] = token.split(".");
+  const decodedPayload = atob(payload);
+  const user = JSON.parse(decodedPayload);
+  const userId = user.user_id;
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat container
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [chat]); // Scroll whenever the chat state updates
 
   const fetchChatMessages = async () => {
     try {
@@ -22,8 +37,13 @@ function Chat() {
 
       if (response.ok) {
         const data = await response.json();
-        const messages = data.map((message) => message.content);
-        setChat(messages);
+        // Map chat messages and add a 'sender' property
+        const chatWithSenders = data.map((message) => ({
+          ...message,
+          sender: message.sender === userId ? "current-user" : "friend-user",
+        }));
+
+        setChat(chatWithSenders);
       } else {
         console.error("Error fetching chat messages");
       }
@@ -33,20 +53,66 @@ function Chat() {
   };
 
   const setupWebSocket = () => {
-    // Connect to the WebSocket server with the friend's ID
     const socket = new WebSocket(`ws://localhost:8000/ws/chat/${friendId}/`);
     setChatSocket(socket);
 
-    // Handle incoming messages from WebSocket
     socket.onmessage = (e) => {
-      const newMessage = JSON.parse(e.data).message;
+      const messageText = JSON.parse(e.data).message;
+
+      const newMessage = {
+        content: messageText,
+        sender: friendId === userId ? "friend-user" : "current-user",
+      };
+
       setChat((prevChat) => [...prevChat, newMessage]);
     };
 
     return socket;
   };
 
+  const fetchUsernames = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      // Fetch the username of the user
+      const userResponse = await fetch(
+        `http://127.0.0.1:8000/api/users/${userId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (userResponse.ok) {
+        const userData = await userResponse.json();
+        setUserUsername(userData.username);
+      }
+
+      // Fetch the username of the friend
+      const friendResponse = await fetch(
+        `http://127.0.0.1:8000/api/users/${friendId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (friendResponse.ok) {
+        const friendData = await friendResponse.json();
+        setFriendUsername(friendData.username);
+      }
+    } catch (error) {
+      console.error("Error fetching usernames", error);
+    }
+  };
+
+  fetchUsernames();
+
   useEffect(() => {
+    // Fetch usernames when the component loads
+    fetchUsernames();
     // Fetch chat messages when the component loads
     fetchChatMessages();
 
@@ -92,21 +158,36 @@ function Chat() {
   };
 
   return (
-    <div className="App">
-      <h1>Chat with Friend</h1>
-      <div id="chat">
-        {chat.map((message, index) => (
-          <p key={index}>{message}</p>
-        ))}
+    <>
+      {/* Top Navigation Bar */}
+      <div className="chat-page-container">
+        <NavigationBar activePage="friends" />
+        <div className="chat-container">
+          <div className="chat-header">Chat with Friend</div>
+          <div id="chat" className="chat-messages" ref={chatContainerRef}>
+            {chat.map((message, index) => (
+              <div key={index} className={`chat-message ${message.sender}`}>
+                <p>{message.content}</p>
+                <span className="user">
+                  {message.sender === "current-user"
+                    ? userUsername
+                    : friendUsername}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="chat-input">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type your message..."
+            />
+            <button onClick={sendMessage}>Send</button>
+          </div>
+        </div>
       </div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your message..."
-      />
-      <button onClick={sendMessage}>Send</button>
-    </div>
+    </>
   );
 }
 

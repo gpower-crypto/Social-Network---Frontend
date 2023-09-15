@@ -1,0 +1,93 @@
+/* Chat.css */
+
+/* Center the chat container */
+.chat-page-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Set the background color of the entire page */
+}
+
+.chat-container {
+  margin-top: 20px;
+  background-color: #fff;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto; /* Make the chat messages container scrollable */
+  max-height: 300px; /* Set a maximum height for the scrollable container */
+}
+
+.chat-messages p {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-bottom: 2px;
+  max-width: 70%;
+}
+
+.user {
+  font-size: 14px; /* Set the desired font size */
+  font-weight: 200;
+}
+
+.chat-input {
+  background-color: #f0f0f0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  bottom: 0; /* Stick the input field to the bottom */
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.chat-input button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.chat-message.current-user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align the current user's chat messages to the right */
+  margin-bottom: 10px;
+}
+
+/* Add styles for the friend's chat messages */
+.chat-message.friend-user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align the friend's chat messages to the left */
+  margin-bottom: 10px;
+}

@@ -1,0 +1,49 @@
+/* NavigationBar.css */
+
+.top-nav {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #222; /* Add a bottom border */
+}
+
+.nav-links {
+  margin-left: 10px;
+  display: flex;
+  gap: 20px;
+  align-items: center; /* Vertically align links with icons */
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  position: relative; /* Add a relative position for the links */
+  padding: 10px 20px; /* Increase padding for links */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+.nav-link.active {
+  background-color: #505b65; /* Add background color for active link */
+}
+
+.nav-link:hover {
+  background-color: #555; /* Change background color on hover */
+}
+
+/* Styles for the "Sign Out" button */
+.sign-out-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.sign-out-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}

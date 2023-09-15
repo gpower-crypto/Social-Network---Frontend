@@ -30,7 +30,6 @@ function LoginPage() {
     if (response.ok) {
       const data = await response.json();
       const accessToken = data.access;
-      console.log(accessToken);
       localStorage.setItem("token", accessToken);
 
       // Check if the user is a new user
@@ -40,7 +39,7 @@ function LoginPage() {
       if (isNewUser) {
         navigate("/profile-setup");
       } else {
-        navigate("/dashboard");
+        navigate("/home");
       }
     } else {
       setError("Invalid username or password.");

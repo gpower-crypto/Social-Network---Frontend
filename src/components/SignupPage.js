@@ -38,20 +38,17 @@ function SignupPage() {
       return;
     }
 
-    const response = await fetch(
-      `${process.env.REACT_APP_API}/api/users/register/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      }
-    );
+    const response = await fetch(`http://127.0.0.1:8000/api/users/register/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+    });
 
     if (response.ok) {
       // Set the newUser flag to true

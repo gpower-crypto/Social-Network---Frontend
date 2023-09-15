@@ -1,0 +1,130 @@
+/* UserDashboard.css */
+
+/* Dashboard container */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* Content container for user profile and dashboard content */
+.content-container {
+  display: flex; /* Display user profile and dashboard content in a row */
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* User Profile section */
+.user-profile {
+  flex: 20%; /* 30% of the available space */
+}
+
+/* Main content area */
+.dashboard-content {
+  flex: 80%; /* 70% of the available space */
+  margin-left: 20px; /* Add spacing between user profile and dashboard content */
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+h4 {
+  margin-bottom: 10px;
+}
+
+/* User status input */
+.user-status {
+  margin-bottom: 30px;
+}
+
+.user-status input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+
+.user-status button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Post form */
+.post-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+
+.post-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Post list */
+.post-list {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.post-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list li {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-list strong {
+  font-weight: bold;
+}
+
+.post {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-user {
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.post-text {
+  margin-top: 10px;
+  font-size: 16px;
+}

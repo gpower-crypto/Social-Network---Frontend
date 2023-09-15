@@ -7,6 +7,7 @@ function ProfileSetupPage() {
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [profilePicture, setProfilePicture] = useState(null); // Use state for profile picture
+
   const navigate = useNavigate();
 
   const handleProfileSetup = async () => {
@@ -32,7 +33,7 @@ function ProfileSetupPage() {
         // Profile setup successful
         localStorage.setItem("newUser", "false");
         console.log("Profile saved successfully");
-        navigate("/dashboard");
+        navigate("/home");
       } else {
         // Handle error
       }

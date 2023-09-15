@@ -1,11 +1,16 @@
 // UserList.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import NavigationBar from "./NavigationBar";
+import "../styles/UserList.css";
+import UserProfile from "./UserProfile";
 
 const UserList = () => {
   const [userList, setUserList] = useState([]);
   const token = localStorage.getItem("token");
   const [message, setMessage] = useState("");
+  const [showProfile, setShowProfile] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const [header, payload, signature] = token.split(".");
   const decodedPayload = atob(payload);
@@ -47,25 +52,60 @@ const UserList = () => {
     }
   };
 
+  const handleViewProfile = (userId) => {
+    setSelectedUserId(userId);
+    setShowProfile(true); // Show the profile component when "View Profile" is clicked
+  };
+
+  const handleBackToUserList = () => {
+    setShowProfile(false);
+    setSelectedUserId(null);
+  };
+
   return (
     <div className="user-list">
+      {/* Top Navigation Bar */}
+      <NavigationBar activePage="users" />
       <h2>Users</h2>
       {message && (
         <div className={message.includes("Error") ? "error" : "success"}>
           {message}
         </div>
       )}
-      <ul>
-        {userList.map((user) => (
-          <li key={user.id}>
-            <strong>{user.username}</strong>{" "}
-            <button onClick={() => sendFriendRequest(user.id)}>
-              Send Friend Request
-            </button>
-            <Link to={`/profile/${user.id}`}>View Profile</Link>
-          </li>
-        ))}
-      </ul>
+      {showProfile ? (
+        // Render the Profile component if showProfile is true
+        <UserProfile
+          userId={selectedUserId}
+          showEditButton={false}
+          onClose={() => setShowProfile(false)}
+        />
+      ) : (
+        <>
+          <ul>
+            {userList.map((user) => (
+              <li key={user.id}>
+                <strong>{user.username}</strong>{" "}
+                <button onClick={() => sendFriendRequest(user.id)}>
+                  Send Friend Request
+                </button>
+                {/* Add the view-profile-button class to style the button */}
+                <button
+                  className="view-profile-button"
+                  onClick={() => handleViewProfile(user.id)}
+                >
+                  View Profile
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {/* Add a "Back" button */}
+      {showProfile && (
+        <button className="back-button" onClick={handleBackToUserList}>
+          &larr; Back to Users
+        </button>
+      )}
     </div>
   );
 };

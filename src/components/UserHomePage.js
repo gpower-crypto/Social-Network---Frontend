@@ -1,11 +1,10 @@
-// UserDashboard.js
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "../styles/UserDashboard.css";
+import "../styles/UserHomePage.css";
 import Comments from "./Comments";
-import * as Sentry from "@sentry/react";
+import UserProfile from "./UserProfile";
+import NavigationBar from "./NavigationBar";
 
-function UserDashboard() {
+function UserHomePage() {
   const [posts, setPosts] = useState([]);
   const [newPostContent, setNewPostContent] = useState("");
   const [userStatus, setUserStatus] = useState("");
@@ -15,24 +14,6 @@ function UserDashboard() {
   const decodedPayload = atob(payload);
   const user = JSON.parse(decodedPayload);
   const userId = user.user_id;
-
-  const sendDataToSentry = ({ name, message, extra, tags }) => {
-    const error = new Error();
-
-    error.message = message;
-
-    error.name = name;
-
-    // Added login source as a common extra param for onboarding errors
-
-    // Sentry called
-
-    Sentry.captureException(error, {
-      tags,
-
-      extra,
-    });
-  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -76,11 +57,6 @@ function UserDashboard() {
           console.error("Error fetching user status");
         }
       } catch (error) {
-        console.log("here error");
-        sendDataToSentry({
-          name: `errDashboard: ${userId}`,
-          message: "error fetching status",
-        });
         console.error("Error fetching user status", error);
       }
     };
@@ -144,62 +120,62 @@ function UserDashboard() {
 
   return (
     <div className="dashboard">
-      <nav className="dashboard-nav">
-        <Link to="/dashboard" className="nav-link active">
-          Dashboard
-        </Link>
-        <Link to={`/profile/${userId}/`} className="nav-link">
-          View Profile
-        </Link>
-        <Link to="/users" className="nav-link">
-          Users
-        </Link>
-        <Link to="/friends" className="nav-link">
-          Friends
-        </Link>
-        <Link to="/friend-requests" className="nav-link">
-          Friend Requests
-        </Link>
-      </nav>
+      {/* Top Navigation Bar */}
+      <NavigationBar activePage="home" />
 
-      <div className="dashboard-content">
-        <h1>User Dashboard</h1>
-
-        <div className="user-status">
-          <b>Status</b>
-          <input
-            type="text"
-            value={userStatus}
-            onChange={(e) => setUserStatus(e.target.value)}
-            placeholder="Update your status..."
-          />
-          <button onClick={updateUserStatus}>Update</button>
+      {/* Content Container for User Profile and Dashboard Content */}
+      <div className="content-container">
+        {/* User Profile */}
+        <div className="user-profile">
+          {/* Render the User Profile component here */}
+          <UserProfile userId={userId} showEditButton={true} />
         </div>
 
-        <div className="post-form">
-          <textarea
-            value={newPostContent}
-            onChange={(e) => setNewPostContent(e.target.value)}
-            placeholder="Write your post..."
-          />
-          <button onClick={handlePostSubmit}>Post</button>
-        </div>
+        {/* Main Content Area (Dashboard Content) */}
+        <div className="dashboard-content">
+          <h1>Welcome</h1>
 
-        <div className="post-list">
-          <h2>Posts</h2>
-          <ul>
-            {posts.map((post) => (
-              <li key={post.id}>
-                <strong>{post.user}</strong>: {post.text}
-                {console.log([userId, post.id])}
-                <Comments userId={userId} postId={post.id} />
-              </li>
-            ))}
-          </ul>
+          {/* User Status Input */}
+          <div className="user-status">
+            <h4>Status</h4>
+            <input
+              type="text"
+              value={userStatus}
+              onChange={(e) => setUserStatus(e.target.value)}
+              placeholder="Update your status..."
+            />
+            <button onClick={updateUserStatus}>Update</button>
+          </div>
+
+          {/* Post Form */}
+          <div className="post-form">
+            <textarea
+              value={newPostContent}
+              onChange={(e) => setNewPostContent(e.target.value)}
+              placeholder="Write your post..."
+            />
+            <button onClick={handlePostSubmit}>Post</button>
+          </div>
+
+          {/* Post List */}
+          <div className="post-list">
+            <h2>Posts</h2>
+            <ul>
+              {posts.map((post) => (
+                <li key={post.id}>
+                  <div className="post">
+                    <span className="post-user">{post.user}</span>
+                    <span className="post-text">{post.text}</span>
+                  </div>
+                  <Comments userId={userId} postId={post.id} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default UserDashboard;
+export default UserHomePage;

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-
+import "../styles/Comments.css";
 function Comments({ postId, userId }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [usernames, setUsernames] = useState({});
+  const [editedComment, setEditedComment] = useState("");
 
   const fetchComments = async () => {
     try {
@@ -149,44 +150,71 @@ function Comments({ postId, userId }) {
   };
 
   return (
-    <div className="comments">
-      <ul>
+    <div className="comments-container">
+      <ul className="comment-list">
         {comments.map((comment) => (
-          <li key={comment.id}>
-            {console.log(comment.id)}
-            {editCommentId === comment.id ? (
-              <input
-                type="text"
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-              />
-            ) : (
-              <div>
-                Username - {usernames[comment.user]}: {comment.text}
-              </div>
-            )}
-            <button onClick={() => setEditCommentId(comment.id)}>
-              {editCommentId === comment.id ? "Cancel" : "Edit"}
-            </button>
-            <button onClick={() => handleDeleteComment(comment.id)}>
-              Delete
-            </button>
-            {editCommentId === comment.id && (
-              <button onClick={() => handleEditComment(comment.id, newComment)}>
-                Save
-              </button>
-            )}
+          <li key={comment.id} className="comment-item">
+            <div className="comment-header">
+              <span className="username">{usernames[comment.user]}</span>
+            </div>
+            <div className="comment-text">
+              {editCommentId === comment.id ? (
+                <div>
+                  <input
+                    type="text"
+                    className="edit-comment-input"
+                    value={editedComment}
+                    onChange={(e) => setEditedComment(e.target.value)}
+                  />
+                  <button
+                    className="save-button"
+                    onClick={() => handleEditComment(comment.id, editedComment)}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="cancel-button"
+                    onClick={() => setEditCommentId(null)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <span>{comment.text}</span>
+              )}
+            </div>
+            <div className="comment-buttons">
+              {editCommentId !== comment.id && (
+                <>
+                  <button
+                    className="edit-button"
+                    onClick={() => setEditCommentId(comment.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+            </div>
           </li>
         ))}
       </ul>
-      <div>
+      <div className="add-comment">
         <input
           type="text"
+          className="add-comment-input"
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button onClick={handleAddComment}>Add Comment</button>
+        <button className="add-comment-button" onClick={handleAddComment}>
+          Add Comment
+        </button>
       </div>
     </div>
   );

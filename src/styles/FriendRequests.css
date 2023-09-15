@@ -1,0 +1,58 @@
+.friend-requests-page {
+  padding: 20px;
+}
+
+.friend-requests {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.friend-requests h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.friend-request-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.request-info {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.request-status {
+  font-size: 14px;
+  color: #888;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.accept-button,
+.reject-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.accept-button:hover,
+.reject-button:hover {
+  background-color: #0056b3;
+}

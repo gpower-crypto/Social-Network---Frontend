@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "../styles/FriendList.css"; // Import the CSS file
+import NavigationBar from "./NavigationBar";
 
 function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -33,12 +35,18 @@ function FriendList() {
 
   return (
     <div className="friend-list">
+      {/* Top Navigation Bar */}
+      <NavigationBar activePage="friends" />
       <h2>Friends</h2>
       <ul>
         {friends.map((friend) => (
-          <li key={friend.id}>
-            {friend.username}
-            <Link to={`/chat/${friend.id}`}>Chat</Link>
+          <li key={friend.id} className="friend-item">
+            <div className="friend-details">
+              <strong>{friend.username}</strong>{" "}
+              <Link to={`/chat/${friend.id}`} className="chat-button">
+                Chat
+              </Link>
+            </div>
           </li>
         ))}
       </ul>

@@ -8,8 +8,7 @@ import {
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import ProfileSetupPage from "./components/ProfileSetupPage";
-import UserDashboard from "./components/UserDashboard";
-import UserProfile from "./components/UserProfile";
+import UserHomePage from "./components/UserHomePage";
 import UserList from "./components/UserList";
 import FriendList from "./components/FriendList";
 import FriendRequests from "./components/FriendRequests";
@@ -35,26 +34,15 @@ function PrivateRoute({ path, element }) {
 }
 
 function App() {
-  const logout = () => {
-    localStorage.removeItem("token"); // Clear the authentication token
-    localStorage.removeItem("newUser"); // Clear the newUser flag
-    window.location.href = "/";
-  };
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/chat/:friendId" element={<Chat />} />
         <Route path="/profile-setup" element={<ProfileSetupPage />} />
         <Route
-          path="/dashboard"
-          element={<PrivateRoute element={<UserDashboard />} />}
-        />
-        <Route
-          path="/profile/:userId"
-          element={<PrivateRoute element={<UserProfile />} />}
+          path="/home"
+          element={<PrivateRoute element={<UserHomePage />} />}
         />
         <Route
           path="/profile/:userId/edit"
@@ -72,8 +60,11 @@ function App() {
           path="/friend-requests"
           element={<PrivateRoute element={<FriendRequests />} />}
         />
+        <Route
+          path="/chat/:friendId"
+          element={<PrivateRoute element={<Chat />} />}
+        />
       </Routes>
-      <button onClick={logout}>Logout</button>
     </Router>
   );
 }

@@ -1,0 +1,41 @@
+/* UserProfile.css */
+
+.profile {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.profile h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile p {
+  margin-bottom: 10px;
+}
+
+.profile img.profile-picture {
+  max-width: 100%;
+  border-radius: 100%;
+  margin-top: 10px;
+}
+
+.profile .edit-link {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile .edit-link:hover {
+  background-color: #0056b3;
+}
