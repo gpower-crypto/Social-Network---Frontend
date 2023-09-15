@@ -1,5 +1,4 @@
-/* NavigationBar.css */
-
+/* Style for the top navigation bar */
 .top-nav {
   width: 100%;
   background-color: #333;
@@ -8,38 +7,43 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #222; /* Add a bottom border */
+  border-bottom: 2px solid #222;
 }
 
+/* Style for the navigation links container */
 .nav-links {
   margin-left: 10px;
   display: flex;
   gap: 20px;
-  align-items: center; /* Vertically align links with icons */
+  align-items: center;
 }
 
+/* Style for individual navigation links */
 .nav-link {
   color: white;
   text-decoration: none;
-  position: relative; /* Add a relative position for the links */
-  padding: 10px 20px; /* Increase padding for links */
-  border-radius: 5px; /* Add rounded corners */
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 
+/* Style for the active navigation link */
 .nav-link.active {
-  background-color: #505b65; /* Add background color for active link */
+  background-color: #505b65;
 }
 
+/* Hover style for navigation links */
 .nav-link:hover {
-  background-color: #555; /* Change background color on hover */
+  background-color: #555;
 }
 
-/* Styles for the "Sign Out" button */
+/* Style for the sign-out button container */
 .sign-out-button-container {
   display: flex;
   align-items: center;
 }
 
+/* Style for the sign-out button */
 .sign-out-button {
   background-color: transparent;
   border: none;

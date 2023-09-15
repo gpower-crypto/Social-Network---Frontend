@@ -3,18 +3,24 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../styles/ProfileEditPage.css";
 
 function ProfileEditPage() {
+  // State variables to manage user profile data
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
+
+  // React Router's `useNavigate` hook to handle navigation
   const navigate = useNavigate();
+
+  // Get the `userId` parameter from the route
   const { userId } = useParams();
 
+  // Fetch user profile data when the component loads
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/users/${userId}/get_profile/`, // Adjust the endpoint
+          `http://127.0.0.1:8000/api/users/${userId}/get_profile/`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -24,6 +30,7 @@ function ProfileEditPage() {
 
         if (response.ok) {
           const userData = await response.json();
+          // Update state with user profile data
           setName(userData.name);
           setBio(userData.bio);
           setLocation(userData.location);
@@ -41,7 +48,9 @@ function ProfileEditPage() {
     fetchUserProfile();
   }, [userId]);
 
+  // Function to handle profile edits
   const handleProfileEdit = async () => {
+    // Create a FormData object to send profile data
     const formData = new FormData();
     formData.append("name", name);
     formData.append("bio", bio);
@@ -50,7 +59,7 @@ function ProfileEditPage() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/users/${userId}/edit_profile/`, // Adjust the endpoint
+        `http://127.0.0.1:8000/api/users/${userId}/edit_profile/`,
         {
           method: "PUT",
           headers: {
@@ -62,7 +71,7 @@ function ProfileEditPage() {
 
       if (response.ok) {
         console.log("Profile updated successfully");
-        navigate("/home");
+        navigate("/home"); // Redirect to the home page after profile update
       } else {
         // Handle error
       }

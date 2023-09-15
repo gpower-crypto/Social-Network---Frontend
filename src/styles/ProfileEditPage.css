@@ -1,5 +1,4 @@
-/* ProfileEditPage.css */
-
+/* Style for the profile editing page container */
 .profile-edit-page {
   max-width: 600px;
   margin: 0 auto;
@@ -9,21 +8,25 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Style for the heading of the profile editing page */
 .profile-edit-page h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
+/* Style for form groups (e.g., input fields and labels) */
 .form-group {
   margin-bottom: 15px;
 }
 
+/* Style for labels within form groups */
 .form-group label {
   font-size: 16px;
   display: block;
   margin-bottom: 5px;
 }
 
+/* Style for text input fields and textareas within form groups */
 .form-group input[type="text"],
 .form-group textarea {
   width: 100%;
@@ -33,16 +36,19 @@
   font-size: 16px;
 }
 
+/* Style for textareas with vertical resizing */
 .form-group textarea {
   resize: vertical;
 }
 
+/* Style for file input fields within form groups */
 .form-group input[type="file"] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
 }
 
+/* Style for the profile edit button */
 .profile-edit-button {
   background-color: #007bff;
   color: #fff;
@@ -52,6 +58,7 @@
   cursor: pointer;
 }
 
+/* Hover style for the profile edit button */
 .profile-edit-button:hover {
   background-color: #0056b3;
 }

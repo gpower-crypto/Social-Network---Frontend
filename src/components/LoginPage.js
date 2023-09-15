@@ -3,24 +3,26 @@ import { useNavigate } from "react-router-dom";
 import "../styles/LoginPage.css";
 
 function LoginPage() {
+  // State variables to manage username, password, error, and success message
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
+  // Function to handle the login process
   const handleLogin = async () => {
     if (!username || !password) {
       setError("Please fill in all fields.");
       return;
     }
 
+    // Send a POST request to the server to obtain an access token
     const response = await fetch("http://127.0.0.1:8000/token/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify({
         username,
         password,
@@ -36,10 +38,11 @@ function LoginPage() {
       const isNewUser = localStorage.getItem("newUser") === "true";
       console.log("isNewUser:", isNewUser);
 
+      // Redirect the user based on whether they are new or existing
       if (isNewUser) {
-        navigate("/profile-setup");
+        navigate("/profile-setup"); // Redirect to profile setup for new users
       } else {
-        navigate("/home");
+        navigate("/home"); // Redirect to the home page for existing users
       }
     } else {
       setError("Invalid username or password.");

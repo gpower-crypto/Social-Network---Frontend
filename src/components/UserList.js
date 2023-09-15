@@ -1,26 +1,29 @@
-// UserList.js
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
 import "../styles/UserList.css";
 import UserProfile from "./UserProfile";
 
 const UserList = () => {
+  // State variables for user list, token, message, and profile display
   const [userList, setUserList] = useState([]);
   const token = localStorage.getItem("token");
   const [message, setMessage] = useState("");
   const [showProfile, setShowProfile] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
+  // Extract user information from the JWT token
   const [header, payload, signature] = token.split(".");
   const decodedPayload = atob(payload);
   const user = JSON.parse(decodedPayload);
   const userId = user.user_id;
 
+  // useEffect to fetch the list of users when the component mounts
   useEffect(() => {
     const fetchUsers = async () => {
       const response = await fetch("http://127.0.0.1:8000/api/users/");
       const data = await response.json();
+
+      // Filter out the current user from the list
       const filteredUsers = data.filter((user) => user.id !== userId);
       setUserList(filteredUsers);
     };
@@ -28,6 +31,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
+  // Function to send a friend request to a user
   const sendFriendRequest = async (userId) => {
     const token = localStorage.getItem("token");
     const response = await fetch(
@@ -52,11 +56,13 @@ const UserList = () => {
     }
   };
 
+  // Function to handle viewing a user's profile
   const handleViewProfile = (userId) => {
     setSelectedUserId(userId);
     setShowProfile(true); // Show the profile component when "View Profile" is clicked
   };
 
+  // Function to handle going back to the user list from a profile view
   const handleBackToUserList = () => {
     setShowProfile(false);
     setSelectedUserId(null);
@@ -88,7 +94,7 @@ const UserList = () => {
                 <button onClick={() => sendFriendRequest(user.id)}>
                   Send Friend Request
                 </button>
-                {/* Add the view-profile-button class to style the button */}
+                {/* view-profile-button class to style the button */}
                 <button
                   className="view-profile-button"
                   onClick={() => handleViewProfile(user.id)}
@@ -100,7 +106,7 @@ const UserList = () => {
           </ul>
         </>
       )}
-      {/* Add a "Back" button */}
+      {/* "Back" button */}
       {showProfile && (
         <button className="back-button" onClick={handleBackToUserList}>
           &larr; Back to Users

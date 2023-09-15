@@ -1,7 +1,9 @@
+/* Style for the friend requests page container */
 .friend-requests-page {
   padding: 20px;
 }
 
+/* Style for the friend requests container */
 .friend-requests {
   background-color: #fff;
   border-radius: 10px;
@@ -11,11 +13,13 @@
   margin: 20px auto;
 }
 
+/* Style for the heading within the friend requests container */
 .friend-requests h2 {
   font-size: 24px;
   margin-bottom: 10px;
 }
 
+/* Style for an individual friend request item */
 .friend-request-item {
   margin-bottom: 15px;
   padding: 10px;
@@ -26,23 +30,28 @@
   align-items: flex-start;
 }
 
+/* Style for request information within a friend request item */
 .request-info {
   font-size: 16px;
   margin-bottom: 5px;
 }
 
+/* Style for the request status text within a friend request item */
 .request-status {
   font-size: 14px;
   color: #888;
 }
 
+/* Style for action buttons within a friend request item */
 .action-buttons {
   display: flex;
   gap: 10px;
   margin-top: 10px;
 }
 
+/* Style for the accept button */
 .accept-button,
+/* Style for the reject button */
 .reject-button {
   background-color: #007bff;
   color: #fff;
@@ -52,6 +61,7 @@
   cursor: pointer;
 }
 
+/* Hover style for the accept and reject buttons */
 .accept-button:hover,
 .reject-button:hover {
   background-color: #0056b3;

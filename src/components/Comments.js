@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Comments.css";
-function Comments({ postId, userId }) {
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
-  const [editCommentId, setEditCommentId] = useState(null);
-  const [usernames, setUsernames] = useState({});
-  const [editedComment, setEditedComment] = useState("");
 
+function Comments({ postId, userId }) {
+  const [comments, setComments] = useState([]); // State for storing comments
+  const [newComment, setNewComment] = useState(""); // State for new comment input
+  const [editCommentId, setEditCommentId] = useState(null); // State for editing a comment
+  const [usernames, setUsernames] = useState({}); // State for storing usernames
+  const [editedComment, setEditedComment] = useState(""); // State for edited comment text
+
+  // Function to fetch comments for the given post and user
   const fetchComments = async () => {
     try {
       const response = await fetch(
@@ -33,6 +35,7 @@ function Comments({ postId, userId }) {
     fetchComments();
   }, [postId, userId]);
 
+  // Function to fetch usernames for comment authors
   useEffect(() => {
     const fetchUsernames = async () => {
       const allUserIds = Array.from(
@@ -65,6 +68,7 @@ function Comments({ postId, userId }) {
     fetchUsernames();
   }, [comments]);
 
+  // Function to add a new comment
   const handleAddComment = async () => {
     try {
       const response = await fetch(
@@ -93,6 +97,7 @@ function Comments({ postId, userId }) {
     }
   };
 
+  // Function to edit a comment
   const handleEditComment = async (commentId, newText) => {
     try {
       const response = await fetch(
@@ -125,6 +130,7 @@ function Comments({ postId, userId }) {
     }
   };
 
+  // Function to delete a comment
   const handleDeleteComment = async (commentId) => {
     try {
       const response = await fetch(

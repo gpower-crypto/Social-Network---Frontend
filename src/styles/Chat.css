@@ -1,15 +1,14 @@
-/* Chat.css */
-
 /* Center the chat container */
 .chat-page-container {
   padding: 20px;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; /* Set the background color of the entire page */
+  background-color: #f0f0f0;
 }
 
+/* Style for the main chat container */
 .chat-container {
   margin-top: 20px;
   background-color: #fff;
@@ -21,6 +20,7 @@
   overflow: hidden;
 }
 
+/* Header styling for the chat */
 .chat-header {
   background-color: #007bff;
   color: #fff;
@@ -30,13 +30,15 @@
   font-size: 18px;
 }
 
+/* Styling for chat messages container */
 .chat-messages {
   flex-grow: 1;
   padding: 10px;
-  overflow-y: auto; /* Make the chat messages container scrollable */
-  max-height: 300px; /* Set a maximum height for the scrollable container */
+  overflow-y: auto;
+  max-height: 300px;
 }
 
+/* Styling for individual chat messages */
 .chat-messages p {
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -45,11 +47,13 @@
   max-width: 70%;
 }
 
+/* Styling for the username of the sender */
 .user {
-  font-size: 14px; /* Set the desired font size */
+  font-size: 14px;
   font-weight: 200;
 }
 
+/* Styling for the chat input area */
 .chat-input {
   background-color: #f0f0f0;
   padding: 10px;
@@ -57,9 +61,10 @@
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  bottom: 0; /* Stick the input field to the bottom */
+  bottom: 0;
 }
 
+/* Styling for the chat input field */
 .chat-input input {
   flex-grow: 1;
   padding: 8px;
@@ -68,6 +73,7 @@
   margin-right: 10px;
 }
 
+/* Styling for the send button */
 .chat-input button {
   background-color: #007bff;
   color: #fff;
@@ -77,17 +83,18 @@
   cursor: pointer;
 }
 
+/* Styling for current user's messages */
 .chat-message.current-user {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Align the current user's chat messages to the right */
+  align-items: flex-end;
   margin-bottom: 10px;
 }
 
-/* Add styles for the friend's chat messages */
+/* Styling for friend user's messages */
 .chat-message.friend-user {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align the friend's chat messages to the left */
+  align-items: flex-start;
   margin-bottom: 10px;
 }

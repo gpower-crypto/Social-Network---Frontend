@@ -1,13 +1,18 @@
+/* Styles for the user list page */
+
+/* Set the font family and margin for the entire user list */
 .user-list {
   font-family: Arial, sans-serif;
   margin: 20px;
 }
 
+/* Define styles for headings (e.g., "Users") */
 h2 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
+/* Style for messages or notifications */
 .message {
   padding: 10px;
   margin-bottom: 20px;
@@ -15,21 +20,25 @@ h2 {
   font-weight: bold;
 }
 
+/* Style for error messages */
 .error {
-  background-color: #ff6b6b; /* Red background for error message */
+  background-color: #ff6b6b;
   color: white;
 }
 
+/* Style for success messages */
 .success {
-  background-color: #66bb6a; /* Green background for success message */
+  background-color: #66bb6a;
   color: white;
 }
 
+/* Define styles for unordered lists */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* Style for list items */
 li {
   margin: 20px 0;
   border: 1px solid #ccc;
@@ -39,11 +48,13 @@ li {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Style for strong text (usually used for bold text) */
 strong {
   font-weight: bold;
   margin-right: 10px;
 }
 
+/* Style for buttons */
 button {
   background-color: #007bff;
   color: white;
@@ -54,24 +65,29 @@ button {
   margin-right: 10px;
 }
 
+/* Hover effect for buttons */
 button:hover {
   background-color: #0056b3;
 }
 
+/* Style for hyperlinks */
 a {
   text-decoration: none;
   color: #007bff;
   font-weight: bold;
 }
 
+/* Hover effect for hyperlinks */
 a:hover {
   text-decoration: underline;
 }
 
+/* Style specifically for "View Profile" buttons */
 button.view-profile-button {
-  background-color: #28a745; /* Green background color */
+  background-color: #28a745;
 }
 
+/* Hover effect for "View Profile" buttons */
 button.view-profile-button:hover {
-  background-color: #218838; /* Darker green color on hover */
+  background-color: #218838;
 }

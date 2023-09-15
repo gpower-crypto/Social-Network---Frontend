@@ -5,20 +5,25 @@ import UserProfile from "./UserProfile";
 import NavigationBar from "./NavigationBar";
 
 function UserHomePage() {
+  // State variables for posts, new post content, and user status
   const [posts, setPosts] = useState([]);
   const [newPostContent, setNewPostContent] = useState("");
   const [userStatus, setUserStatus] = useState("");
 
+  // Extract user information from the JWT token
   const token = localStorage.getItem("token");
   const [header, payload, signature] = token.split(".");
   const decodedPayload = atob(payload);
   const user = JSON.parse(decodedPayload);
   const userId = user.user_id;
 
+  // useEffect to fetch posts when the component mounts
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch("http://127.0.0.1:8000/api/posts/");
       const postData = await response.json();
+
+      // Fetch usernames for each post's user ID
       const postsWithUserNames = await Promise.all(
         postData.map(async (post) => {
           const userResponse = await fetch(
@@ -31,6 +36,8 @@ function UserHomePage() {
           };
         })
       );
+
+      // Reverse the order of posts and set the state
       const reversedPosts = postsWithUserNames.reverse();
       setPosts(reversedPosts);
     };
@@ -38,6 +45,7 @@ function UserHomePage() {
     fetchPosts();
   }, []);
 
+  // useEffect to fetch the user's status
   useEffect(() => {
     const fetchUserStatus = async () => {
       try {
@@ -64,6 +72,7 @@ function UserHomePage() {
     fetchUserStatus();
   }, [token]);
 
+  // Function to update the user's status
   const updateUserStatus = async () => {
     try {
       const response = await fetch(
@@ -88,6 +97,7 @@ function UserHomePage() {
     }
   };
 
+  // Function to handle post submission
   const handlePostSubmit = async () => {
     const response = await fetch("http://127.0.0.1:8000/api/posts/", {
       method: "POST",
@@ -104,14 +114,20 @@ function UserHomePage() {
     if (response.ok) {
       setNewPostContent("");
       const newPostData = await response.json();
+
+      // Fetch the username for the current user
       const userResponse = await fetch(
         `http://127.0.0.1:8000/api/users/${userId}/`
       );
       const userData = await userResponse.json();
+
+      // Create a new post object with the username
       const newPostWithUsername = {
         ...newPostData,
         user: userData.username,
       };
+
+      // Update the posts state with the new post
       setPosts((prevPosts) => [newPostWithUsername, ...prevPosts]);
     } else {
       console.error("Error submitting post");
@@ -167,6 +183,7 @@ function UserHomePage() {
                     <span className="post-user">{post.user}</span>
                     <span className="post-text">{post.text}</span>
                   </div>
+                  {/* Render the Comments component for each post */}
                   <Comments userId={userId} postId={post.id} />
                 </li>
               ))}

@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import "../styles/ProfileSetupPage.css"; // You can create a new CSS file for this page
+import "../styles/ProfileSetupPage.css";
 import { useNavigate } from "react-router-dom";
 
 function ProfileSetupPage() {
+  // State variables to manage user profile setup data
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [profilePicture, setProfilePicture] = useState(null); // Use state for profile picture
 
+  // React Router's `useNavigate` hook to handle navigation
   const navigate = useNavigate();
 
+  // Function to handle profile setup
   const handleProfileSetup = async () => {
+    // Create a FormData object to send profile setup data
     const formData = new FormData();
     formData.append("name", name);
     formData.append("bio", bio);
@@ -31,9 +35,9 @@ function ProfileSetupPage() {
 
       if (response.ok) {
         // Profile setup successful
-        localStorage.setItem("newUser", "false");
+        localStorage.setItem("newUser", "false"); // Mark the user as an existing user
         console.log("Profile saved successfully");
-        navigate("/home");
+        navigate("/home"); // Redirect to the home page after profile setup
       } else {
         // Handle error
       }

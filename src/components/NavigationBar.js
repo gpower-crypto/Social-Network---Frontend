@@ -4,11 +4,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/NavigationBar.css";
 
+// NavigationBar component receives an 'activePage' prop to highlight the active link
 const NavigationBar = ({ activePage }) => {
+  // Function to handle user sign-out
   const handleSignOut = () => {
     localStorage.removeItem("token"); // Clear the authentication token
     localStorage.removeItem("newUser"); // Clear the newUser flag
-    window.location.href = "/";
+    window.location.href = "/"; // Redirect the user to the home page
   };
 
   return (

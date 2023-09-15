@@ -1,5 +1,6 @@
-/* UserProfile.css */
+/* Styles for the user profile page */
 
+/* Styling for the profile container */
 .profile {
   background-color: #f4f4f4;
   padding: 20px;
@@ -10,21 +11,25 @@
   margin: 0 auto;
 }
 
+/* Style for the profile title */
 .profile h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
+/* Style for paragraphs inside the profile */
 .profile p {
   margin-bottom: 10px;
 }
 
+/* Style for the profile picture */
 .profile img.profile-picture {
   max-width: 100%;
   border-radius: 100%;
   margin-top: 10px;
 }
 
+/* Style for the edit profile link */
 .profile .edit-link {
   display: block;
   margin-top: 20px;
@@ -36,6 +41,7 @@
   cursor: pointer;
 }
 
+/* Hover effect for the edit profile link */
 .profile .edit-link:hover {
   background-color: #0056b3;
 }

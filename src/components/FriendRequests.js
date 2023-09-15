@@ -3,15 +3,17 @@ import "../styles/FriendRequests.css";
 import NavigationBar from "./NavigationBar";
 
 const FriendRequests = () => {
-  const [friendRequests, setFriendRequests] = useState([]);
-  const [usernames, setUsernames] = useState({});
+  const [friendRequests, setFriendRequests] = useState([]); // State to store friend requests
+  const [usernames, setUsernames] = useState({}); // State to store usernames
 
+  // Extract user information from the JWT token
   const token = localStorage.getItem("token");
   const [header, payload, signature] = token.split(".");
   const decodedPayload = atob(payload);
   const user = JSON.parse(decodedPayload);
   const userId = user.user_id;
 
+  // Function to fetch friend requests and associated usernames
   const fetchFriendRequests = async () => {
     const response = await fetch(
       "http://127.0.0.1:8000/api/friend-requests/friend_requests/",
@@ -26,6 +28,7 @@ const FriendRequests = () => {
       const data = await response.json();
       setFriendRequests(data);
 
+      // Extract unique user IDs from friend requests
       const allUserIds = Array.from(
         new Set([
           ...data.map((request) => request.from_user),
@@ -33,6 +36,7 @@ const FriendRequests = () => {
         ])
       );
 
+      // Fetch usernames for all user IDs
       const usernamesData = await Promise.all(
         allUserIds.map(async (userId) => {
           const userResponse = await fetch(
@@ -48,21 +52,23 @@ const FriendRequests = () => {
         })
       );
 
+      // Create an object to map user IDs to usernames
       const usernamesObj = {};
       usernamesData.forEach((userData) => {
         usernamesObj[userData.id] = userData.username;
       });
 
-      setUsernames(usernamesObj);
+      setUsernames(usernamesObj); // Update the usernames state
     } else {
       console.error("Error fetching friend requests");
     }
   };
 
   useEffect(() => {
-    fetchFriendRequests();
+    fetchFriendRequests(); // Fetch friend requests and usernames when the component mounts
   }, []);
 
+  // Function to handle accepting a friend request
   const handleAcceptRequest = async (requestId, fromUserId) => {
     const response = await fetch(
       `http://127.0.0.1:8000/api/friend-requests/${requestId}/accept_request/`,
@@ -75,12 +81,13 @@ const FriendRequests = () => {
     );
 
     if (response.ok) {
-      fetchFriendRequests();
+      fetchFriendRequests(); // Refetch friend requests after accepting
     } else {
       console.error("Error accepting friend request");
     }
   };
 
+  // Function to handle rejecting a friend request
   const handleRejectRequest = async (requestId, fromUserId) => {
     const response = await fetch(
       `http://127.0.0.1:8000/api/friend-requests/${requestId}/reject_request/`,
@@ -93,7 +100,7 @@ const FriendRequests = () => {
     );
 
     if (response.ok) {
-      fetchFriendRequests();
+      fetchFriendRequests(); // Refetch friend requests after rejecting
     } else {
       console.error("Error rejecting friend request");
     }
@@ -101,6 +108,7 @@ const FriendRequests = () => {
 
   return (
     <div className="friend-requests-page">
+      {/* Top Navigation Bar */}
       <NavigationBar activePage="friend-requests" />
       <div className="friend-requests">
         <h2>Friend Requests</h2>

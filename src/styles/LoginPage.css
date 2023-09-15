@@ -1,3 +1,4 @@
+/* Style for the login page container */
 .login-page {
   max-width: 400px;
   margin: 0 auto;
@@ -8,10 +9,12 @@
   background-color: #fff;
 }
 
+/* Style for form groups, such as input fields */
 .form-group {
   margin-bottom: 20px;
 }
 
+/* Style for input fields */
 .input {
   width: 100%;
   padding: 10px;
@@ -21,16 +24,19 @@
   transition: border-color 0.3s;
 }
 
+/* Style for focused input fields */
 .input:focus {
   border-color: #007bff;
 }
 
+/* Style for error messages */
 .error {
   color: red;
   font-size: 12px;
   margin-top: 5px;
 }
 
+/* Style for the login button */
 .login-button {
   background-color: #007bff;
   color: white;
@@ -42,20 +48,24 @@
   transition: background-color 0.3s;
 }
 
+/* Hover style for the login button */
 .login-button:hover {
   background-color: #0056b3;
 }
 
+/* Style for paragraphs */
 p {
   font-size: 14px;
   margin-top: 20px;
 }
 
+/* Style for hyperlinks */
 a {
   color: #007bff;
   text-decoration: none;
 }
 
+/* Hover style for hyperlinks */
 a:hover {
   text-decoration: underline;
 }

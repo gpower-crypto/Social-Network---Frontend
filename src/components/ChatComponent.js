@@ -5,24 +5,29 @@ import NavigationBar from "./NavigationBar";
 
 function Chat() {
   const { friendId } = useParams();
-  const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
-  const [chatSocket, setChatSocket] = useState(null);
-  const [userUsername, setUserUsername] = useState("");
-  const [friendUsername, setFriendUsername] = useState("");
-  const chatContainerRef = useRef(null);
+  const [message, setMessage] = useState(""); // State for the message input
+  const [chat, setChat] = useState([]); // State for storing chat messages
+  const [chatSocket, setChatSocket] = useState(null); // State for WebSocket
+  const [userUsername, setUserUsername] = useState(""); // User's username
+  const [friendUsername, setFriendUsername] = useState(""); // Friend's username
+  const chatContainerRef = useRef(null); // Reference to chat container
 
+  // Extract user information from the JWT token
   const token = localStorage.getItem("token");
   const [header, payload, signature] = token.split(".");
   const decodedPayload = atob(payload);
   const user = JSON.parse(decodedPayload);
   const userId = user.user_id;
 
-  useEffect(() => {
-    // Scroll to the bottom of the chat container
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }, [chat]); // Scroll whenever the chat state updates
+  // Create a unique chat session identifier
+  const chatSessionIdentifier = [userId, friendId].sort().join("_");
 
+  // Function to scroll to the bottom of the chat container
+  useEffect(() => {
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [chat]); // Scroll when the chat state updates
+
+  // Function to fetch chat messages
   const fetchChatMessages = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -52,10 +57,14 @@ function Chat() {
     }
   };
 
+  // Function to set up WebSocket connection
   const setupWebSocket = () => {
-    const socket = new WebSocket(`ws://localhost:8000/ws/chat/${friendId}/`);
+    const socket = new WebSocket(
+      `ws://localhost:8000/ws/chat/${chatSessionIdentifier}/`
+    );
     setChatSocket(socket);
 
+    // Handle incoming WebSocket messages
     socket.onmessage = (e) => {
       const messageText = JSON.parse(e.data).message;
 
@@ -70,6 +79,7 @@ function Chat() {
     return socket;
   };
 
+  // Function to fetch usernames
   const fetchUsernames = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -108,15 +118,10 @@ function Chat() {
     }
   };
 
-  fetchUsernames();
-
   useEffect(() => {
-    // Fetch usernames when the component loads
+    // Fetch usernames, chat messages, and set up WebSocket when the component loads
     fetchUsernames();
-    // Fetch chat messages when the component loads
     fetchChatMessages();
-
-    // Set up WebSocket connection when the component mounts
     const socket = setupWebSocket();
 
     return () => {
@@ -125,6 +130,7 @@ function Chat() {
     };
   }, [friendId, userId]);
 
+  // Function to send a chat message
   const sendMessage = async () => {
     if (chatSocket.readyState === WebSocket.OPEN && message.trim() !== "") {
       // Send the message via WebSocket

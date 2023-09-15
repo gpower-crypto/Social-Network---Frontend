@@ -1,5 +1,4 @@
-/* FriendList.css (Custom styles) */
-
+/* Style for the friend list container */
 .friend-list {
   font-family: "Helvetica Neue", sans-serif;
   padding: 20px;
@@ -8,17 +7,20 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Style for the heading */
 h2 {
   font-size: 24px;
   margin-bottom: 20px;
   color: #333;
 }
 
+/* Style for the unordered list */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* Style for hyperlinks */
 a {
   text-decoration: none;
   color: #007bff;
@@ -26,10 +28,12 @@ a {
   font-size: 16px;
 }
 
+/* Hover style for hyperlinks */
 a:hover {
   text-decoration: underline;
 }
 
+/* Style for an individual friend item */
 .friend-item {
   margin-bottom: 20px;
   border: 1px solid #ccc;
@@ -42,11 +46,13 @@ a:hover {
   justify-content: space-between;
 }
 
+/* Style for friend details */
 .friend-details {
   display: flex;
   align-items: center;
 }
 
+/* Style for the chat button */
 .chat-button {
   background-color: #007bff;
   color: white;
@@ -58,6 +64,7 @@ a:hover {
   margin-left: 10px;
 }
 
+/* Hover style for the chat button */
 .chat-button:hover {
   background-color: #0056b3;
 }

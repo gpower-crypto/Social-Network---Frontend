@@ -3,12 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import "../styles/SignupPage.css";
 
 function SignupPage() {
+  // State variables to manage form input values
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({}); // State to track form field errors
   const navigate = useNavigate();
 
+  // Function to validate the form fields
   const validateForm = () => {
     const errors = {};
 
@@ -33,6 +35,7 @@ function SignupPage() {
     return Object.keys(errors).length === 0;
   };
 
+  // Function to handle user registration
   const handleSignup = async () => {
     if (!validateForm()) {
       return;
@@ -51,13 +54,14 @@ function SignupPage() {
     });
 
     if (response.ok) {
-      // Set the newUser flag to true
+      // Set the newUser flag to true to indicate a new user
       localStorage.setItem("newUser", "true");
-      console.log("login page haha");
+      console.log("Registration successful");
       navigate("/");
     } else {
-      console.log("is fucked");
-      alert(response.errors);
+      // Handle registration errors
+      console.log("Registration failed");
+      alert(response.errors); // Display an alert with registration errors
     }
   };
 
