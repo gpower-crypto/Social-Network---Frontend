@@ -1,4 +1,4 @@
-// NavigationBar.js
+// I wrote this code
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -53,3 +53,5 @@ const NavigationBar = ({ activePage }) => {
 };
 
 export default NavigationBar;
+
+// end of code I wrote  

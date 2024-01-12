@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/Chat.css";
@@ -7,6 +9,7 @@ function Chat() {
   const { friendId } = useParams();
   const [message, setMessage] = useState(""); // State for the message input
   const [chat, setChat] = useState([]); // State for storing chat messages
+  const [newChat, setNewChat] = useState([]);
   const [chatSocket, setChatSocket] = useState(null); // State for WebSocket
   const [userUsername, setUserUsername] = useState(""); // User's username
   const [friendUsername, setFriendUsername] = useState(""); // Friend's username
@@ -25,14 +28,14 @@ function Chat() {
   // Function to scroll to the bottom of the chat container
   useEffect(() => {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }, [chat]); // Scroll when the chat state updates
+  }, [chat, newChat]); // Scroll when the chat state updates
 
   // Function to fetch chat messages
   const fetchChatMessages = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://127.0.0.1:8000/api/chat-messages/user_chat/?friend_id=${friendId}`,
+        `${process.env.REACT_APP_API}/api/chat-messages/user_chat/?friend_id=${friendId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,20 +63,22 @@ function Chat() {
   // Function to set up WebSocket connection
   const setupWebSocket = () => {
     const socket = new WebSocket(
-      `ws://localhost:8000/ws/chat/${chatSessionIdentifier}/`
+      `ws://socialnetwork-LB-222140309.us-east-1.elb.amazonaws.com:8000/ws/chat/${chatSessionIdentifier}/`
     );
     setChatSocket(socket);
 
     // Handle incoming WebSocket messages
     socket.onmessage = (e) => {
-      const messageText = JSON.parse(e.data).message;
+      const messageData = JSON.parse(e.data);
 
+      // Updated message structure to include sender's name
       const newMessage = {
-        content: messageText,
-        sender: friendId === userId ? "friend-user" : "current-user",
+        sender: messageData.sender_name,
+        sender_id: messageData.sender_id === userId ? "current-user" : "friend-user",
+        content: messageData.message,
       };
 
-      setChat((prevChat) => [...prevChat, newMessage]);
+      setNewChat((prevChat) => [...prevChat, newMessage]);
     };
 
     return socket;
@@ -86,7 +91,7 @@ function Chat() {
 
       // Fetch the username of the user
       const userResponse = await fetch(
-        `http://127.0.0.1:8000/api/users/${userId}/`,
+        `${process.env.REACT_APP_API}/api/users/${userId}/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -101,7 +106,7 @@ function Chat() {
 
       // Fetch the username of the friend
       const friendResponse = await fetch(
-        `http://127.0.0.1:8000/api/users/${friendId}/`,
+        `${process.env.REACT_APP_API}/api/users/${friendId}/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -134,11 +139,11 @@ function Chat() {
   const sendMessage = async () => {
     if (chatSocket.readyState === WebSocket.OPEN && message.trim() !== "") {
       // Send the message via WebSocket
-      chatSocket.send(JSON.stringify({ message }));
-
+      // look it sends this to the consumer which then gets the name of the user using the user profile model and gives it to the websocket
+      chatSocket.send(JSON.stringify({ sender_id: userId, message: message.trim() }))
       // Create a new chat message in the database
       const response = await fetch(
-        "http://127.0.0.1:8000/api/chat-messages/create_message/",
+        `${process.env.REACT_APP_API}/api/chat-messages/create_message/`,
         {
           method: "POST",
           headers: {
@@ -181,6 +186,14 @@ function Chat() {
                 </span>
               </div>
             ))}
+            {newChat.map((message, index) => (
+              <div key={index} className={`chat-message ${message.sender_id}`}>
+                {console.log(message.sender_id)}
+
+                <p>{message.content}</p>
+                <span className="user">{message.sender}</span>
+              </div>
+            ))}
           </div>
           <div className="chat-input">
             <input
@@ -198,3 +211,5 @@ function Chat() {
 }
 
 export default Chat;
+
+// end of code I wrote

@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState, useEffect } from "react";
 import "../styles/UserHomePage.css";
 import Comments from "./Comments";
@@ -20,14 +22,14 @@ function UserHomePage() {
   // useEffect to fetch posts when the component mounts
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/posts/");
+      const response = await fetch(`${process.env.REACT_APP_API}/api/posts/`);
       const postData = await response.json();
 
       // Fetch usernames for each post's user ID
       const postsWithUserNames = await Promise.all(
         postData.map(async (post) => {
           const userResponse = await fetch(
-            `http://127.0.0.1:8000/api/users/${post.user}/`
+            `${process.env.REACT_APP_API}/api/users/${post.user}/`
           );
           const userData = await userResponse.json();
           return {
@@ -50,7 +52,7 @@ function UserHomePage() {
     const fetchUserStatus = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/users/status/`, // Updated URL
+          `${process.env.REACT_APP_API}/api/users/status/`, // Updated URL
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,7 +78,7 @@ function UserHomePage() {
   const updateUserStatus = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/users/update_status/`, // Updated URL
+        `${process.env.REACT_APP_API}/api/users/update_status/`, // Updated URL
         {
           method: "PUT",
           headers: {
@@ -99,7 +101,7 @@ function UserHomePage() {
 
   // Function to handle post submission
   const handlePostSubmit = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/posts/", {
+    const response = await fetch(`${process.env.REACT_APP_API}/api/posts/`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -117,7 +119,7 @@ function UserHomePage() {
 
       // Fetch the username for the current user
       const userResponse = await fetch(
-        `http://127.0.0.1:8000/api/users/${userId}/`
+        `${process.env.REACT_APP_API}/api/users/${userId}/`
       );
       const userData = await userResponse.json();
 
@@ -196,3 +198,5 @@ function UserHomePage() {
 }
 
 export default UserHomePage;
+
+// end of code I wrote

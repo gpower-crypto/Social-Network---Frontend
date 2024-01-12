@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState } from "react";
 import "../styles/ProfileSetupPage.css";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +25,7 @@ function ProfileSetupPage() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/users/create_profile/",
+        `${process.env.REACT_APP_API}/api/users/create_profile/`,
         {
           method: "POST",
           headers: {
@@ -91,3 +93,5 @@ function ProfileSetupPage() {
 }
 
 export default ProfileSetupPage;
+
+// end of code I wrote

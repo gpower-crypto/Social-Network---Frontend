@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/ProfileEditPage.css";
@@ -20,7 +22,7 @@ function ProfileEditPage() {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/users/${userId}/get_profile/`,
+          `${process.env.REACT_APP_API}/api/users/${userId}/get_profile/`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -59,7 +61,7 @@ function ProfileEditPage() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/users/${userId}/edit_profile/`,
+        `${process.env.REACT_APP_API}/api/users/${userId}/edit_profile/`,
         {
           method: "PUT",
           headers: {
@@ -125,3 +127,5 @@ function ProfileEditPage() {
 }
 
 export default ProfileEditPage;
+
+// end of code I wrote

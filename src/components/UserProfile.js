@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/UserProfile.css"; // Import your UserProfile CSS file
@@ -12,7 +14,7 @@ function UserProfile({ userId, showEditButton }) {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          `http://127.0.0.1:8000/api/users/${userId}/get_profile/`,
+          `${process.env.REACT_APP_API}/api/users/${userId}/get_profile/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -42,7 +44,7 @@ function UserProfile({ userId, showEditButton }) {
           {/* Display profile picture if available */}
           {profileData.profile_picture && (
             <img
-              src={`http://127.0.0.1:8000${profileData.profile_picture}`}
+              src={`${process.env.REACT_APP_API}${profileData.profile_picture}`}
               alt="Profile"
               className="profile-picture"
             />
@@ -75,3 +77,5 @@ function UserProfile({ userId, showEditButton }) {
 }
 
 export default UserProfile;
+
+// end of code I wrote

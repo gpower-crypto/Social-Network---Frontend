@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useEffect, useState } from "react";
 import "../styles/FriendRequests.css";
 import NavigationBar from "./NavigationBar";
@@ -16,7 +18,7 @@ const FriendRequests = () => {
   // Function to fetch friend requests and associated usernames
   const fetchFriendRequests = async () => {
     const response = await fetch(
-      "http://127.0.0.1:8000/api/friend-requests/friend_requests/",
+      `${process.env.REACT_APP_API}/api/friend-requests/friend_requests/`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -40,7 +42,7 @@ const FriendRequests = () => {
       const usernamesData = await Promise.all(
         allUserIds.map(async (userId) => {
           const userResponse = await fetch(
-            `http://127.0.0.1:8000/api/users/${userId}/`,
+            `${process.env.REACT_APP_API}/api/users/${userId}/`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -71,7 +73,7 @@ const FriendRequests = () => {
   // Function to handle accepting a friend request
   const handleAcceptRequest = async (requestId, fromUserId) => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/friend-requests/${requestId}/accept_request/`,
+      `${process.env.REACT_APP_API}/api/friend-requests/${requestId}/accept_request/`,
       {
         method: "POST",
         headers: {
@@ -90,7 +92,7 @@ const FriendRequests = () => {
   // Function to handle rejecting a friend request
   const handleRejectRequest = async (requestId, fromUserId) => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/friend-requests/${requestId}/reject_request/`,
+      `${process.env.REACT_APP_API}/api/friend-requests/${requestId}/reject_request/`,
       {
         method: "POST",
         headers: {
@@ -163,3 +165,5 @@ const FriendRequests = () => {
 };
 
 export default FriendRequests;
+
+// end of code I wrote

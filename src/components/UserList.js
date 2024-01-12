@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useEffect, useState } from "react";
 import NavigationBar from "./NavigationBar";
 import "../styles/UserList.css";
@@ -20,7 +22,7 @@ const UserList = () => {
   // useEffect to fetch the list of users when the component mounts
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/users/");
+      const response = await fetch(`${process.env.REACT_APP_API}/api/users/`);
       const data = await response.json();
 
       // Filter out the current user from the list
@@ -35,7 +37,7 @@ const UserList = () => {
   const sendFriendRequest = async (userId) => {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      "http://127.0.0.1:8000/api/friend-requests/send_request/",
+      `${process.env.REACT_APP_API}/api/friend-requests/send_request/`,
       {
         method: "POST",
         headers: {
@@ -117,3 +119,5 @@ const UserList = () => {
 };
 
 export default UserList;
+
+// end of code I wrote

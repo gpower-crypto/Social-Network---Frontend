@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/FriendList.css";
@@ -12,7 +14,7 @@ function FriendList() {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "http://127.0.0.1:8000/api/users/friends/",
+          `${process.env.REACT_APP_API}/api/users/friends/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -57,3 +59,5 @@ function FriendList() {
 }
 
 export default FriendList;
+
+// end of code I wrote

@@ -1,3 +1,5 @@
+// I wrote this code
+
 import React, { useState, useEffect } from "react";
 import "../styles/Comments.css";
 
@@ -12,7 +14,7 @@ function Comments({ postId, userId }) {
   const fetchComments = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/comments/get_comments/?post_id=${postId}&user_id=${userId}`,
+        `${process.env.REACT_APP_API}/api/comments/get_comments/?post_id=${postId}&user_id=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -45,7 +47,7 @@ function Comments({ postId, userId }) {
       const usernamesData = await Promise.all(
         allUserIds.map(async (userId) => {
           const userResponse = await fetch(
-            `http://127.0.0.1:8000/api/users/${userId}/`,
+            `${process.env.REACT_APP_API}/api/users/${userId}/`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -72,7 +74,7 @@ function Comments({ postId, userId }) {
   const handleAddComment = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/comments/create_comment/?user_id=${userId}&post_id=${postId}`,
+        `${process.env.REACT_APP_API}/api/comments/create_comment/?user_id=${userId}&post_id=${postId}`,
         {
           method: "POST",
           headers: {
@@ -101,7 +103,7 @@ function Comments({ postId, userId }) {
   const handleEditComment = async (commentId, newText) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/comments/edit_comment/?user_id=${userId}&comment_id=${commentId}`,
+        `${process.env.REACT_APP_API}/api/comments/edit_comment/?user_id=${userId}&comment_id=${commentId}`,
         {
           method: "PUT",
           headers: {
@@ -134,7 +136,7 @@ function Comments({ postId, userId }) {
   const handleDeleteComment = async (commentId) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/comments/edit_comment/?user_id=${userId}&comment_id=${commentId}`,
+        `${process.env.REACT_APP_API}/api/comments/edit_comment/?user_id=${userId}&comment_id=${commentId}`,
         {
           method: "DELETE",
           headers: {
@@ -227,3 +229,5 @@ function Comments({ postId, userId }) {
 }
 
 export default Comments;
+
+// end of code I wrote
